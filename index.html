@@ -1,0 +1,609 @@
+<!DOCTYPE html>  
+<html lang="fr">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Évaluation du lien entre troubles psychiques et facteurs professionnels</title>  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="styles.css">  
+    <!-- Bibliothèques pour l'export PDF -->  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>  
+</head>  
+<body>  
+    <div class="container py-4">  
+        <div class="row justify-content-center">  
+            <div class="col-lg-10">  
+                <div class="card">  
+                    <div class="card-header bg-primary text-white">  
+                        <h1 class="h3 mb-0">Évaluation du lien entre troubles psychiques et facteurs professionnels</h1>  
+                    </div>  
+                    <div class="card-body">  
+                        <div class="alert alert-info">  
+                            <h5>Instructions</h5>  
+                            <p>Complétez chaque section du formulaire pour évaluer le lien entre les troubles psychiques et les facteurs professionnels. Une fois toutes les sections complétées, cliquez sur "Calculer les scores" pour obtenir l'interprétation globale.</p>  
+                        </div>  
+                        
+                        <!-- Informations générales -->  
+                        <div class="card mb-4">  
+                            <div class="card-body">  
+                                <h5 class="card-title">Informations générales</h5>  
+                                <div class="row g-3">  
+                                    <div class="col-md-6">  
+                                        <label for="patientName" class="form-label">Nom du patient</label>  
+                                        <input type="text" class="form-control" id="patientName">  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <label for="evaluatorName" class="form-label">Nom de l'évaluateur</label>  
+                                        <input type="text" class="form-control" id="evaluatorName">  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <label for="evaluationDate" class="form-label">Date d'évaluation</label>  
+                                        <input type="date" class="form-control" id="evaluationDate">  
+                                    </div>  
+                                    <div class="col-md-6">  
+                                        <label for="pathologyType" class="form-label">Type de pathologie</label>  
+                                        <select class="form-select" id="pathologyType">  
+                                            <option value="" selected disabled>Sélectionner...</option>  
+                                            <option value="anxiete">Trouble anxieux généralisé</option>  
+                                            <option value="depression">Dépression sévère</option>  
+                                            <option value="ptsd">Syndrome post-traumatique</option>  
+                                        </select>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                        </div>  
+                        
+                        <!-- Onglets d'évaluation -->  
+                        <ul class="nav nav-tabs" id="evaluationTabs" role="tablist">  
+                            <li class="nav-item" role="presentation">  
+                                <button class="nav-link active" id="diagnostic-tab" data-bs-toggle="tab" data-bs-target="#diagnostic" type="button" role="tab" aria-controls="diagnostic" aria-selected="true">1. Diagnostic et temporel</button>  
+                            </li>  
+                            <li class="nav-item" role="presentation">  
+                                <button class="nav-link" id="professional-tab" data-bs-toggle="tab" data-bs-target="#professional" type="button" role="tab" aria-controls="professional" aria-selected="false">2. Facteurs professionnels</button>  
+                            </li>  
+                            <li class="nav-item" role="presentation">  
+                                <button class="nav-link" id="extraprofessional-tab" data-bs-toggle="tab" data-bs-target="#extraprofessional" type="button" role="tab" aria-controls="extraprofessional" aria-selected="false">3. Facteurs extraprofessionnels</button>  
+                            </li>  
+                            <li class="nav-item" role="presentation">  
+                                <button class="nav-link" id="specific-tab" data-bs-toggle="tab" data-bs-target="#specific" type="button" role="tab" aria-controls="specific" aria-selected="false">4. Critères spécifiques</button>  
+                            </li>  
+                            <li class="nav-item" role="presentation">  
+                                <button class="nav-link" id="results-tab" data-bs-toggle="tab" data-bs-target="#results" type="button" role="tab" aria-controls="results" aria-selected="false">5. Résultats</button>  
+                            </li>  
+                        </ul>  
+                        
+                        <div class="tab-content" id="evaluationTabsContent">  
+                            <!-- Onglet 1: Diagnostic et temporel -->  
+                            <div class="tab-pane fade show active" id="diagnostic" role="tabpanel" aria-labelledby="diagnostic-tab">  
+                                <div class="card mt-3 mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Module A: Confirmation diagnostique et niveau de sévérité</h5>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 1: Vérification du diagnostic</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="diagnostic-verification" id="diagnostic-verification-0" value="0">  
+                                                <label class="form-check-label" for="diagnostic-verification-0">Diagnostic non établi selon critères DSM-5/CIM-10 [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="diagnostic-verification" id="diagnostic-verification-3" value="3">  
+                                                <label class="form-check-label" for="diagnostic-verification-3">Diagnostic partiellement établi ou avec comorbidités complexes [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="diagnostic-verification" id="diagnostic-verification-5" value="5">  
+                                                <label class="form-check-label" for="diagnostic-verification-5">Diagnostic clairement établi selon critères DSM-5/CIM-10 [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 2: Sévérité des symptômes</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-severity" id="symptom-severity-0" value="0">  
+                                                <label class="form-check-label" for="symptom-severity-0">Symptômes légers sans retentissement fonctionnel significatif [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-severity" id="symptom-severity-3" value="3">  
+                                                <label class="form-check-label" for="symptom-severity-3">Symptômes modérés avec retentissement fonctionnel partiel [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-severity" id="symptom-severity-5" value="5">  
+                                                <label class="form-check-label" for="symptom-severity-5">Symptômes sévères avec retentissement fonctionnel important [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 3: Durée des symptômes</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-duration" id="symptom-duration-0" value="0">  
+                                                <label class="form-check-label" for="symptom-duration-0">Symptômes présents depuis moins de 3 mois [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-duration" id="symptom-duration-3" value="3">  
+                                                <label class="form-check-label" for="symptom-duration-3">Symptômes présents depuis 3 à 6 mois [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-duration" id="symptom-duration-5" value="5">  
+                                                <label class="form-check-label" for="symptom-duration-5">Symptômes présents depuis plus de 6 mois [5]</label>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                                
+                                <div class="card mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Module B: Chronologie et évolution temporelle</h5>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 4: Apparition des symptômes par rapport à l'exposition</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-onset" id="symptom-onset-0" value="0">  
+                                                <label class="form-check-label" for="symptom-onset-0">Symptômes préexistants sans aggravation significative après exposition [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-onset" id="symptom-onset-3" value="3">  
+                                                <label class="form-check-label" for="symptom-onset-3">Aggravation significative de symptômes préexistants après exposition [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-onset" id="symptom-onset-5" value="5">  
+                                                <label class="form-check-label" for="symptom-onset-5">Apparition de novo après exposition professionnelle [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 5: Délai entre l'exposition et l'apparition des symptômes</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-delay" id="symptom-delay-0" value="0">  
+                                                <label class="form-check-label" for="symptom-delay-0">Délai prolongé (> 12 mois) ou délai très court (< 48h) [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-delay" id="symptom-delay-3" value="3">  
+                                                <label class="form-check-label" for="symptom-delay-3">Délai intermédiaire (6-12 mois) [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-delay" id="symptom-delay-5" value="5">  
+                                                <label class="form-check-label" for="symptom-delay-5">Délai compatible (1-6 mois) [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 6: Évolution des symptômes par rapport à l'exposition</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-evolution" id="symptom-evolution-0" value="0">  
+                                                <label class="form-check-label" for="symptom-evolution-0">Pas de modification des symptômes malgré l'arrêt de l'exposition [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-evolution" id="symptom-evolution-3" value="3">  
+                                                <label class="form-check-label" for="symptom-evolution-3">Amélioration partielle après arrêt de l'exposition [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="symptom-evolution" id="symptom-evolution-5" value="5">  
+                                                <label class="form-check-label" for="symptom-evolution-5">Amélioration significative après arrêt de l'exposition ou aggravation lors de la réexposition [5]</label>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            
+                            <!-- Onglet 2: Facteurs professionnels -->  
+                            <div class="tab-pane fade" id="professional" role="tabpanel" aria-labelledby="professional-tab">  
+                                <div class="card mt-3 mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Module C: Caractérisation des facteurs professionnels</h5>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 7: Charge de travail excessive</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="workload" id="workload-0" value="0">  
+                                                <label class="form-check-label" for="workload-0">Charge de travail normale ou adéquate [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="workload" id="workload-3" value="3">  
+                                                <label class="form-check-label" for="workload-3">Charge de travail modérément excessive [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="workload" id="workload-5" value="5">  
+                                                <label class="form-check-label" for="workload-5">Charge de travail clairement excessive et prolongée [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 8: Manque d'autonomie décisionnelle</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="autonomy" id="autonomy-0" value="0">  
+                                                <label class="form-check-label" for="autonomy-0">Autonomie décisionnelle adéquate [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="autonomy" id="autonomy-3" value="3">  
+                                                <label class="form-check-label" for="autonomy-3">Autonomie décisionnelle réduite [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="autonomy" id="autonomy-5" value="5">  
+                                                <label class="form-check-label" for="autonomy-5">Absence quasi-totale d'autonomie décisionnelle [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 9: Soutien social au travail</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support" id="social-support-0" value="0">  
+                                                <label class="form-check-label" for="social-support-0">Soutien adéquat des collègues et supérieurs [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support" id="social-support-3" value="3">  
+                                                <label class="form-check-label" for="social-support-3">Soutien insuffisant ou inadéquat [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support" id="social-support-5" value="5">  
+                                                <label class="form-check-label" for="social-support-5">Absence de soutien ou conflit actif [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 10: Reconnaissance au travail</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="recognition" id="recognition-0" value="0">  
+                                                <label class="form-check-label" for="recognition-0">Reconnaissance satisfaisante des efforts et compétences [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="recognition" id="recognition-3" value="3">  
+                                                <label class="form-check-label" for="recognition-3">Reconnaissance insuffisante [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="recognition" id="recognition-5" value="5">  
+                                                <label class="form-check-label" for="recognition-5">Absence de reconnaissance ou dévalorisation active [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 11: Exigences émotionnelles</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="emotional-demands" id="emotional-demands-0" value="0">  
+                                                <label class="form-check-label" for="emotional-demands-0">Exigences émotionnelles normales ou adéquatement compensées [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="emotional-demands" id="emotional-demands-3" value="3">  
+                                                <label class="form-check-label" for="emotional-demands-3">Exigences émotionnelles élevées partiellement compensées [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="emotional-demands" id="emotional-demands-5" value="5">  
+                                                <label class="form-check-label" for="emotional-demands-5">Exigences émotionnelles très élevées sans compensation [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 12: Conflit de valeurs</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="value-conflict" id="value-conflict-0" value="0">  
+                                                <label class="form-check-label" for="value-conflict-0">Absence de conflit de valeurs [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="value-conflict" id="value-conflict-3" value="3">  
+                                                <label class="form-check-label" for="value-conflict-3">Conflit de valeurs modéré [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="value-conflict" id="value-conflict-5" value="5">  
+                                                <label class="form-check-label" for="value-conflict-5">Conflit de valeurs majeur [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 13: Insécurité de la situation de travail</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="job-security" id="job-security-0" value="0">  
+                                                <label class="form-check-label" for="job-security-0">Situation de travail stable et sécurisée [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="job-security" id="job-security-3" value="3">  
+                                                <label class="form-check-label" for="job-security-3">Insécurité modérée ou changements anticipés [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="job-security" id="job-security-5" value="5">  
+                                                <label class="form-check-label" for="job-security-5">Forte insécurité ou changements brutaux imposés [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 14: Violence et harcèlement</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="harassment" id="harassment-0" value="0">  
+                                                <label class="form-check-label" for="harassment-0">Absence de violence ou harcèlement [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="harassment" id="harassment-3" value="3">  
+                                                <label class="form-check-label" for="harassment-3">Violence ou harcèlement isolé ou de faible intensité [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="harassment" id="harassment-5" value="5">  
+                                                <label class="form-check-label" for="harassment-5">Violence ou harcèlement répété ou de forte intensité [5]</label>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            
+                            <!-- Onglet 3: Facteurs extraprofessionnels -->  
+                            <div class="tab-pane fade" id="extraprofessional" role="tabpanel" aria-labelledby="extraprofessional-tab">  
+                                <div class="card mt-3 mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Module D: Évaluation des facteurs extraprofessionnels</h5>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 15: Vulnérabilités personnelles préexistantes</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="personal-vulnerability" id="personal-vulnerability-5" value="5">  
+                                                <label class="form-check-label" for="personal-vulnerability-5">Absence de vulnérabilités préexistantes [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="personal-vulnerability" id="personal-vulnerability-3" value="3">  
+                                                <label class="form-check-label" for="personal-vulnerability-3">Vulnérabilités modérées compensées [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="personal-vulnerability" id="personal-vulnerability-0" value="0">  
+                                                <label class="form-check-label" for="personal-vulnerability-0">Vulnérabilités importantes documentées [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 16: Antécédents psychiatriques personnels</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="psychiatric-history" id="psychiatric-history-5" value="5">  
+                                                <label class="form-check-label" for="psychiatric-history-5">Absence d'antécédents psychiatriques [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="psychiatric-history" id="psychiatric-history-3" value="3">  
+                                                <label class="form-check-label" for="psychiatric-history-3">Antécédents psychiatriques anciens et résolus [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="psychiatric-history" id="psychiatric-history-0" value="0">  
+                                                <label class="form-check-label" for="psychiatric-history-0">Antécédents psychiatriques récents ou multiples [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 17: Antécédents familiaux psychiatriques</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-history" id="family-history-5" value="5">  
+                                                <label class="form-check-label" for="family-history-5">Absence d'antécédents familiaux psychiatriques [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-history" id="family-history-3" value="3">  
+                                                <label class="form-check-label" for="family-history-3">Antécédents familiaux chez parents éloignés [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-history" id="family-history-0" value="0">  
+                                                <label class="form-check-label" for="family-history-0">Antécédents familiaux chez parents proches [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 18: Événements de vie stressants personnels</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="life-events" id="life-events-5" value="5">  
+                                                <label class="form-check-label" for="life-events-5">Absence d'événements de vie stressants significatifs [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="life-events" id="life-events-3" value="3">  
+                                                <label class="form-check-label" for="life-events-3">Événements de vie stressants modérés [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="life-events" id="life-events-0" value="0">  
+                                                <label class="form-check-label" for="life-events-0">Événements de vie très stressants (deuil, divorce, etc.) [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 19: Soutien social hors travail</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support-personal" id="social-support-personal-5" value="5">  
+                                                <label class="form-check-label" for="social-support-personal-5">Réseau de soutien social solide et disponible [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support-personal" id="social-support-personal-3" value="3">  
+                                                <label class="form-check-label" for="social-support-personal-3">Réseau de soutien social limité ou partiellement disponible [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="social-support-personal" id="social-support-personal-0" value="0">  
+                                                <label class="form-check-label" for="social-support-personal-0">Absence de réseau de soutien social ou isolement [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 20: Difficultés familiales</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-difficulties" id="family-difficulties-5" value="5">  
+                                                <label class="form-check-label" for="family-difficulties-5">Absence de difficultés familiales significatives [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-difficulties" id="family-difficulties-3" value="3">  
+                                                <label class="form-check-label" for="family-difficulties-3">Difficultés familiales modérées [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="family-difficulties" id="family-difficulties-0" value="0">  
+                                                <label class="form-check-label" for="family-difficulties-0">Difficultés familiales majeures ou conflits importants [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 21: Difficultés financières</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="financial-difficulties" id="financial-difficulties-5" value="5">  
+                                                <label class="form-check-label" for="financial-difficulties-5">Absence de difficultés financières [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="financial-difficulties" id="financial-difficulties-3" value="3">  
+                                                <label class="form-check-label" for="financial-difficulties-3">Difficultés financières modérées [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="financial-difficulties" id="financial-difficulties-0" value="0">  
+                                                <label class="form-check-label" for="financial-difficulties-0">Difficultés financières importantes [0]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 22: Problèmes de santé physique</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="physical-health" id="physical-health-5" value="5">  
+                                                <label class="form-check-label" for="physical-health-5">Absence de problèmes de santé physique significatifs [5]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="physical-health" id="physical-health-3" value="3">  
+                                                <label class="form-check-label" for="physical-health-3">Problèmes de santé physique modérés ou bien contrôlés [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="physical-health" id="physical-health-0" value="0">  
+                                                <label class="form-check-label" for="physical-health-0">Problèmes de santé physique importants [0]</label>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            
+                            <!-- Onglet 4: Critères spécifiques -->  
+                            <div class="tab-pane fade" id="specific" role="tabpanel" aria-labelledby="specific-tab">  
+                                <div class="card mt-3 mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Module E: Évaluation des critères spécifiques à la pathologie</h5>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 23: Correspondance avec profil typique</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="typical-profile" id="typical-profile-0" value="0">  
+                                                <label class="form-check-label" for="typical-profile-0">Pas de correspondance avec le profil typique d'origine professionnelle [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="typical-profile" id="typical-profile-3" value="3">  
+                                                <label class="form-check-label" for="typical-profile-3">Correspondance partielle avec le profil typique [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="typical-profile" id="typical-profile-5" value="5">  
+                                                <label class="form-check-label" for="typical-profile-5">Forte correspondance avec le profil typique d'origine professionnelle [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 24: Consensus entre évaluateurs</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="evaluator-consensus" id="evaluator-consensus-0" value="0">  
+                                                <label class="form-check-label" for="evaluator-consensus-0">Désaccord entre évaluateurs quant à l'origine professionnelle [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="evaluator-consensus" id="evaluator-consensus-3" value="3">  
+                                                <label class="form-check-label" for="evaluator-consensus-3">Consensus partiel entre évaluateurs [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="evaluator-consensus" id="evaluator-consensus-5" value="5">  
+                                                <label class="form-check-label" for="evaluator-consensus-5">Fort consensus entre évaluateurs quant à l'origine professionnelle [5]</label>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mb-4">  
+                                            <label class="form-label">Critère 25: Cas similaires documentés</label>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="similar-cases" id="similar-cases-0" value="0">  
+                                                <label class="form-check-label" for="similar-cases-0">Pas de cas similaires documentés dans le même contexte professionnel [0]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="similar-cases" id="similar-cases-3" value="3">  
+                                                <label class="form-check-label" for="similar-cases-3">Quelques cas similaires documentés [3]</label>  
+                                            </div>  
+                                            <div class="form-check">  
+                                                <input class="form-check-input" type="radio" name="similar-cases" id="similar-cases-5" value="5">  
+                                                <label class="form-check-label" for="similar-cases-5">Nombreux cas similaires bien documentés dans le même contexte professionnel [5]</label>  
+                                            </div>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            
+                            <!-- Onglet 5: Résultats -->  
+                            <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">  
+                                <div class="card mt-3 mb-3">  
+                                    <div class="card-body">  
+                                        <h5 class="card-title">Résultats de l'évaluation</h5>  
+                                        <p class="card-text">Cliquez sur "Calculer les scores" pour obtenir les résultats de l'évaluation.</p>  
+                                        
+                                        <div id="results-container" class="d-none">  
+                                            <div class="alert alert-primary">  
+                                                <h5>Informations générales</h5>  
+                                                <p><strong>Patient:</strong> <span id="result-patient-name">-</span></p>  
+                                                <p><strong>Évaluateur:</strong> <span id="result-evaluator-name">-</span></p>  
+                                                <p><strong>Date d'évaluation:</strong> <span id="result-evaluation-date">-</span></p>  
+                                                <p><strong>Type de pathologie:</strong> <span id="result-pathology-type">-</span></p>  
+                                            </div>  
+                                            
+                                            <h6 class="mt-4">Scores par section</h6>  
+                                            <table class="table table-bordered">  
+                                                <thead class="table-light">  
+                                                    <tr>  
+                                                        <th>Section</th>  
+                                                        <th>Score</th>  
+                                                        <th>Maximum</th>  
+                                                    </tr>  
+                                                </thead>  
+                                                <tbody>  
+                                                    <tr>  
+                                                        <td>Module A & B: Diagnostic et temporel</td>  
+                                                        <td id="diagnostic-score">-</td>  
+                                                        <td>30</td>  
+                                                    </tr>  
+                                                    <tr>  
+                                                        <td>Module C: Facteurs professionnels</td>  
+                                                        <td id="professional-score">-</td>  
+                                                        <td>40</td>  
+                                                    </tr>  
+                                                    <tr>  
+                                                        <td>Module D: Facteurs extraprofessionnels</td>  
+                                                        <td id="extraprofessional-score">-</td>  
+                                                        <td>40</td>  
+                                                    </tr>  
+                                                    <tr>  
+                                                        <td>Module E: Critères spécifiques</td>  
+                                                        <td id="specific-score">-</td>  
+                                                        <td>15</td>  
+                                                    </tr>  
+                                                </tbody>  
+                                            </table>  
+                                            
+                                            <div class="row mt-4">  
+                                                <div class="col-md-6">  
+                                                    <div class="card">  
+                                                        <div class="card-body text-center">  
+                                                            <h5 class="card-title">Score global pondéré</h5>  
+                                                            <p class="display-1 fw-bold" id="global-score">-</p>  
+                                                        </div>  
+                                                    </div>  
+                                                </div>  
+                                                <div class="col-md-6">  
+                                                    <div class="card">  
+                                                        <div class="card-body">  
+                                                            <h5 class="card-title">Interprétation</h5>  
+                                                            <div id="interpretation" class="alert">  
+                                                                <p class="mb-0" id="interpretation-text">-</p>  
+                                                            </div>  
+                                                        </div>  
+                                                    </div>  
+                                                </div>  
+                                            </div>  
+                                        </div>  
+                                        
+                                        <div class="mt-4">  
+                                            <button class="btn btn-primary" id="calculate-btn">Calculer les scores</button>  
+                                            <button class="btn btn-success ms-2" id="print-btn">Imprimer le rapport</button>  
+                                            <button class="btn btn-danger ms-2" id="export-pdf-btn">Exporter en PDF</button>  
+                                            <button class="btn btn-secondary ms-2" id="reset-btn">Nouvelle évaluation</button>  
+                                        </div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                        </div>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
+    <script src="script.js"></script>  
+</body>  
+</html>

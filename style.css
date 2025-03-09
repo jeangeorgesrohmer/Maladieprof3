@@ -1,0 +1,89 @@
+body {  
+    background-color: #f8f9fa;  
+}  
+
+.card {  
+    border-radius: 10px;  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+}  
+
+.card-header {  
+    border-radius: 10px 10px 0 0 !important;  
+}  
+
+.form-check {  
+    margin-left: 20px;  
+}  
+
+.nav-tabs .nav-link {  
+    color: #495057;  
+}  
+
+.nav-tabs .nav-link.active {  
+    font-weight: bold;  
+    color: #0d6efd;  
+}  
+
+#results-container {  
+    animation: fadeIn 0.5s;  
+}  
+
+@keyframes fadeIn {  
+    from { opacity: 0; }  
+    to { opacity: 1; }  
+}  
+
+#global-score {  
+    font-size: 4rem;  
+}  
+
+#interpretation {  
+    padding: 15px;  
+    border-left: 5px solid;  
+}  
+
+.low-probability {  
+    background-color: #f8d7da;  
+    border-color: #dc3545;  
+}  
+
+.possible {  
+    background-color: #fff3cd;  
+    border-color: #ffc107;  
+}  
+
+.probable {  
+    background-color: #d1e7dd;  
+    border-color: #198754;  
+}  
+
+.highly-probable {  
+    background-color: #cfe2ff;  
+    border-color: #0d6efd;  
+}  
+
+@media print {  
+    .btn, .nav-tabs {  
+        display: none !important;  
+    }  
+    
+    body {  
+        padding: 0;  
+        margin: 0;  
+    }  
+    
+    .container {  
+        width: 100%;  
+        max-width: 100%;  
+    }  
+    
+    .card {  
+        box-shadow: none;  
+        border: 1px solid #ddd;  
+    }  
+    
+    .tab-pane {  
+        display: block !important;  
+        opacity: 1 !important;  
+    }  
+}
